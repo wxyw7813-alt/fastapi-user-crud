@@ -1,0 +1,13 @@
+venv/
+.env
+.env.local
+.env.docker
+__pycache__/
+*.py[cod]
+.DS_Store
+*.log
+.idea/
+.vscode/
+requirements_backup.txt
+docker-compose_backup.yml
+main_backup_*.py
