@@ -14,7 +14,7 @@ This demo deliberately deploys only the database-independent `/health` route. Th
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
-pytest --quiet
+python -m pytest --quiet
 docker build -t user-api-mysql:local .
 docker run --rm -p 8080:8080 user-api-mysql:local
 curl http://localhost:8080/health
