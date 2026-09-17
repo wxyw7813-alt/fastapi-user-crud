@@ -19,6 +19,9 @@ services:
     build: .
     restart: unless-stopped
     env_file: .env
+    environment:
+      RUN_DB_INIT: "true"
+      PORT: "8000"
     depends_on:
       mysql:
         condition: service_healthy

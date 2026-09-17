@@ -1,3 +1,4 @@
+from fastapi.middleware.cors import CORSMiddleware # Update because of html test
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
@@ -14,6 +15,20 @@ app = FastAPI(
     description="把内存数据对接到 MySQL 数据库",
     version="2.0.0"
 )
+
+# Update because of html test
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/health", tags=["system"])
+def health_check():
+    """Lightweight probe that does not require a database connection."""
+    return {"status": "ok"}
 
 class UserCreate(BaseModel):
     username: str = Field(..., min_length=1, max_length=64)
