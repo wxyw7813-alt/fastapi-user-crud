@@ -5,7 +5,7 @@ This demo deliberately deploys only the database-independent `/health` route. Th
 ## What runs automatically
 
 - `.github/workflows/ci.yml` runs tests and builds the Docker image for pull requests and pushes to `main` or `gcp-deploy`.
-- `.github/workflows/deploy.yml` is initially manual. It repeats the tests, builds and pushes an image tagged with the Git commit SHA, deploys that exact image to Cloud Run, and verifies `/health`.
+- `.github/workflows/deploy.yml` runs on pushes to `gcp-deploy` and also supports manual runs after the workflow exists on the default branch. It repeats the tests, builds and pushes an image tagged with the Git commit SHA, deploys that exact image to Cloud Run, and verifies `/health`.
 - Authentication uses GitHub OIDC and Google Workload Identity Federation. No service-account JSON key is stored in GitHub.
 
 ## 1. Validate locally
@@ -64,11 +64,11 @@ gh variable set VARIABLE_NAME --body "VALUE"
 
 1. Commit and push this branch.
 2. Open the repository's **Actions** page and confirm the `CI` workflow passes.
-3. Select **Deploy to Cloud Run**, choose **Run workflow**, and run it from `gcp-deploy`.
+3. A push to `gcp-deploy` starts **Deploy to Cloud Run** automatically. If this workflow is later merged into the default branch, it can also be started with **Run workflow**.
 4. Open the deployment job summary or the Cloud Run console to find the service URL.
 5. Verify `SERVICE_URL/health` returns `{"status":"ok"}`.
 
-After the manual deployment is stable, automatic deployment can be enabled by adding a `push` trigger for the chosen deployment branch to `deploy.yml`. Keep pull requests CI-only.
+Pull requests remain CI-only; only pushes to `gcp-deploy` publish the demo.
 
 ## Troubleshooting
 

@@ -2,6 +2,9 @@ name: Deploy to Cloud Run
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - gcp-deploy
 
 permissions:
   contents: read
